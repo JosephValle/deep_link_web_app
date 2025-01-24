@@ -1,3 +1,4 @@
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,13 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Join Mycap!',
+      title: 'Deep Link Converter',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Join MyCap'),
+      home: const MyHomePage(title: 'Deep Link Converter'),
     );
   }
 }
@@ -31,6 +32,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String? payload;
+  String? deepLink;
+
+  @override
+  void initState() {
+    super.initState();
+    _extractPayloadFromUrl();
+  }
+
+  void _extractPayloadFromUrl() {
+    final uri = Uri.base; // Gets the current URL
+    final payloadParam = uri.queryParameters['payload'];
+    if (payloadParam != null) {
+      setState(() {
+        payload = Uri.decodeComponent(payloadParam);
+      });
+    }
+  }
+
+  void _convertToDeepLink() {
+    if (payload != null) {
+      final baseLink = "https://mycapplusbeta.page.link/";
+      final queryParameters = {
+        'apn': 'org.vumc.mycapplusbeta',
+        'isi': '6448734173',
+        'ibi': 'org.vumc.mycapplusbeta',
+        'link': Uri.encodeComponent(payload!),
+      };
+
+      setState(() {
+        deepLink = "$baseLink?${queryParameters.entries.map((e) => '${e.key}=${e.value}').join('&')}";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,17 +75,38 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text("Already have MyCap?", style: Theme.of(context).textTheme.titleLarge),
-            ElevatedButton(onPressed: () {}, child: Text("Open Mycap")),
-            Text("Don't have MyCap?*", style: Theme.of(context).textTheme.titleLarge),
-            ElevatedButton(onPressed: () {}, child: Text("Install iOS")),
-            ElevatedButton(onPressed: () {}, child: Text("Install Android")),
-            Text("*We can try to read os locale from browser and only show the relevant button"),
-            Text("*And use the official buttons from the app stores"),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (payload != null)
+                Text(
+                  "Extracted Payload:\n$payload",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+              if (deepLink != null) ...[
+                const SizedBox(height: 20),
+                Text(
+                  "Generated Deep Link:\n$deepLink",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    html.window.open(deepLink!, "_blank");
+                  },
+                  child: const Text("Open Deep Link"),
+                ),
+              ],
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _convertToDeepLink,
+                child: const Text("Convert to Deep Link"),
+              ),
+            ],
+          ),
         ),
       ),
     );
