@@ -31,9 +31,9 @@ jobs:
       - name: Create Apple file
         run: |
           echo '{ "applinks": { "apps": [], "details": [ { "appID": "TEAM_ID.com.example.myapp", "paths": ["*"] } ] } }' > build/web/.well-known/apple-app-site-association
-
-      - name: Create _redirects file
-        run: echo '/*    /index.html   200' > build/web/_redirects
+#
+#      - name: Create _redirects file
+#        run: echo '/*    /index.html   200' > build/web/_redirects
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
