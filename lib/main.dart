@@ -13,6 +13,8 @@ void main() {
   final uri = Uri.parse(currentUrl);
   final payload = uri.queryParameters['payload'];
 
+  print("Payload: $payload");
+
   runApp(MyApp(initialPayload: payload));
 }
 
@@ -178,61 +180,58 @@ class PayloadPage extends StatelessWidget {
   final String? payload;
 
   @override
-  Widget build(BuildContext context) {
-    // You can handle the payload here as needed
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              const Text(
-                'Payload Received:',
-              ),
-              const SizedBox(height: 10),
-              Text(
-                payload ?? 'No payload provided.',
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Example action: Convert payload to deep link
-                  if (payload != null) {
-                    const baseLink = 'https://mycapplusbeta.page.link/';
-                    final queryParameters = {
-                      'apn': 'org.vumc.mycapplusbeta',
-                      'isi': '6448734173',
-                      'ibi': 'org.vumc.mycapplusbeta',
-                      'link': Uri.encodeComponent(payload!),
-                    };
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const Text(
+                  'Payload Received:',
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  payload ?? 'No payload provided.',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Example action: Convert payload to deep link
+                    if (payload != null) {
+                      const baseLink = 'https://mycapplusbeta.page.link/';
+                      final queryParameters = {
+                        'apn': 'org.vumc.mycapplusbeta',
+                        'isi': '6448734173',
+                        'ibi': 'org.vumc.mycapplusbeta',
+                        'link': Uri.encodeComponent(payload!),
+                      };
 
-                    final deepLink =
-                        "$baseLink?${queryParameters.entries.map((e) => '${e.key}=${e.value}').join('&')}";
+                      final deepLink =
+                          "$baseLink?${queryParameters.entries.map((e) => '${e.key}=${e.value}').join('&')}";
 
-                    // Open the deep link
-                    html.window.open(deepLink, '_blank');
-                  }
-                },
-                child: const Text('Convert and Open Deep Link'),
-              ),
-            ],
+                      // Open the deep link
+                      html.window.open(deepLink, '_blank');
+                    }
+                  },
+                  child: const Text('Convert and Open Deep Link'),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty('title', title));
-    properties.add(StringProperty('payload', payload));
+    properties..add(StringProperty('title', title))
+    ..add(StringProperty('payload', payload));
   }
 }
 
@@ -240,20 +239,17 @@ class UnknownPage extends StatelessWidget {
   const UnknownPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // A simple page to show for unknown routes
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Unknown Page'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: const Center(
-        child: Text(
-          '404!\nPage Not Found.',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Unknown Page'),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
-      ),
-    );
-  }
+        body: const Center(
+          child: Text(
+            '404!\nPage Not Found.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
+      );
 }
