@@ -3,28 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'payload_object.dart';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Retrieve the current URL
   final currentUrl = html.window.location.href;
-  print('The current url is: $currentUrl');
+  print('The current URL is: $currentUrl');
 
+  // Extract the fragment part after "#/"
+  final hashIndex = currentUrl.indexOf('#/');
+  final fragment = hashIndex != -1 ? currentUrl.substring(hashIndex + 2) : '';
 
-  //https://josephvalle.github.io/deep_link_web_app/#/participantCode=123456789&endPoint=endpoint&studyCode=studycode
-
-  // Parse the URL to check for 'payload' parameter
-  final uri = Uri.parse(currentUrl.replaceAll('#/', ''));
-
-  print('The uri is: $uri');
-  print("The query parameters are: ${uri.queryParameters}");
+  // Parse the fragment as a URI
+  final uri = Uri.parse('https://example.com/?$fragment'); // Dummy base URL
+  print('The parsed URI is: $uri');
+  print('The query parameters are: ${uri.queryParameters}');
 
   final payloadObject = uri.queryParameters.isEmpty
       ? null
       : PayloadObject.fromMap(uri.queryParameters);
+
   runApp(MyApp(initialPayload: payloadObject));
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, this.initialPayload});
