@@ -10,10 +10,10 @@ void main() {
   print('The current url is: $currentUrl');
 
   // Parse the URL to check for 'payload' parameter
-  final uri = Uri.parse(currentUrl);
+  final uri = Uri.parse(currentUrl.replaceAll('#/', ''));
   final payload = uri.queryParameters['payload'];
 
-  print("Payload: $payload");
+  print('Starting with payload: $payload');
 
   runApp(MyApp(initialPayload: payload));
 }
@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget {
               );
             default:
               return MaterialPageRoute(
-                builder: (context) => const UnknownPage(),
+                builder: (context) =>
+                    const MyHomePage(title: 'Deep Link Converter'),
               );
           }
         },
@@ -230,26 +231,8 @@ class PayloadPage extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(StringProperty('title', title))
-    ..add(StringProperty('payload', payload));
+    properties
+      ..add(StringProperty('title', title))
+      ..add(StringProperty('payload', payload));
   }
-}
-
-class UnknownPage extends StatelessWidget {
-  const UnknownPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Unknown Page'),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        ),
-        body: const Center(
-          child: Text(
-            '404!\nPage Not Found.',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 24),
-          ),
-        ),
-      );
 }
