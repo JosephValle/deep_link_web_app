@@ -5,7 +5,8 @@ import 'package:universal_html/html.dart' as html;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  usePathUrlStrategy();
+  // usePathUrlStrategy();
+  print('The current url is: ${html.window.location.href}');
   runApp(const MyApp());
 }
 
