@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 
+import 'payload_object.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -11,16 +13,17 @@ void main() {
 
   // Parse the URL to check for 'payload' parameter
   final uri = Uri.parse(currentUrl.replaceAll('#/', ''));
-  final payload = uri.queryParameters['payload'];
 
-  print('Starting with payload: $payload');
-
-  runApp(MyApp(initialPayload: payload));
+  final payloadObject = uri.queryParameters.isEmpty
+      ? null
+      : PayloadObject.fromMap(uri.queryParameters);
+  runApp(MyApp(initialPayload: payloadObject));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key, this.initialPayload});
-  final String? initialPayload;
+
+  final PayloadObject? initialPayload;
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -34,11 +37,9 @@ class MyApp extends StatelessWidget {
                     const MyHomePage(title: 'Deep Link Converter'),
               );
             case '/payload':
-              final payload = settings.arguments as String?;
-              print('Payload received: $payload');
               return MaterialPageRoute(
-                builder: (context) =>
-                    PayloadPage(title: 'Payload Handler', payload: payload),
+                builder: (context) => PayloadPage(
+                    title: 'Payload Handler', payload: initialPayload!),
               );
             default:
               return MaterialPageRoute(
@@ -58,7 +59,8 @@ class MyApp extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty('initialPayload', initialPayload));
+    properties.add(
+        DiagnosticsProperty<PayloadObject?>('initialPayload', initialPayload));
   }
 }
 
@@ -95,8 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
         payload = Uri.decodeComponent(payloadParam);
       });
       // Optionally, navigate to the payload handler route
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushNamed(context, '/payload', arguments: payload);
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await Navigator.pushNamed(context, '/payload', arguments: payload);
       });
     }
   }
@@ -176,9 +178,10 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class PayloadPage extends StatelessWidget {
-  const PayloadPage({required this.title, this.payload, super.key});
+  const PayloadPage({required this.title, required this.payload, super.key});
+
   final String title;
-  final String? payload;
+  final PayloadObject payload;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -196,32 +199,21 @@ class PayloadPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  payload ?? 'No payload provided.',
+                  payload.participantCode ?? 'Participant Code: N/A',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  payload.endPoint ?? 'End Point: N/A',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  payload.studyCode ?? 'Study Code: N/A',
                   style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // Example action: Convert payload to deep link
-                    if (payload != null) {
-                      const baseLink = 'https://mycapplusbeta.page.link/';
-                      final queryParameters = {
-                        'apn': 'org.vumc.mycapplusbeta',
-                        'isi': '6448734173',
-                        'ibi': 'org.vumc.mycapplusbeta',
-                        'link': Uri.encodeComponent(payload!),
-                      };
-
-                      final deepLink =
-                          "$baseLink?${queryParameters.entries.map((e) => '${e.key}=${e.value}').join('&')}";
-
-                      // Open the deep link
-                      html.window.open(deepLink, '_blank');
-                    }
-                  },
-                  child: const Text('Convert and Open Deep Link'),
-                ),
               ],
             ),
           ),
@@ -231,8 +223,7 @@ class PayloadPage extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(StringProperty('title', title))
-      ..add(StringProperty('payload', payload));
+    properties..add(StringProperty('title', title))
+    ..add(DiagnosticsProperty<PayloadObject>('payload', payload));
   }
 }
