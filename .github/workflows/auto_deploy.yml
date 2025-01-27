@@ -23,7 +23,7 @@ jobs:
         run: flutter pub get
 
       - name: Build
-        run: flutter build web --web-renderer html
+        run: flutter build web
 
       - name: Create .well-known directory
         run: mkdir -p build/web/.well-known
