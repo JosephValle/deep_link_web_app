@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 
-import 'home_page.dart';
-import 'payload_object.dart';
+import 'objects/payload_object.dart';
+import 'user_interface/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
