@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 
 import 'payload_object.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -10,14 +11,10 @@ void main() {
   final currentUrl = html.window.location.href;
   print('The current URL is: $currentUrl');
 
-  // Extract the fragment part after "#/"
   final hashIndex = currentUrl.indexOf('#/');
   final fragment = hashIndex != -1 ? currentUrl.substring(hashIndex + 2) : '';
 
-  // Parse the fragment as a URI
-  final uri = Uri.parse('https://example.com/?$fragment'); // Dummy base URL
-  print('The parsed URI is: $uri');
-  print('The query parameters are: ${uri.queryParameters}');
+  final uri = Uri.parse('https://example.com/?$fragment');
 
   final payloadObject = uri.queryParameters.isEmpty
       ? null
@@ -26,7 +23,6 @@ void main() {
   runApp(MyApp(initialPayload: payloadObject));
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key, this.initialPayload});
 
@@ -34,33 +30,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('initialPayload: $initialPayload');
-    return
-    MaterialApp(
-      // Define the initial route based on the presence of payload
+    return MaterialApp(
       initialRoute: initialPayload != null ? '/payload' : '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/':
             print(settings.name);
             return MaterialPageRoute(
-              builder: (context) =>
-                  MyHomePage(title: 'Deep Link Converter',
-                      initialPayload: initialPayload),
-            );
-          case '/payload':
-            print(settings.name);
-            return MaterialPageRoute(
-              builder: (context) =>
-                  PayloadPage(
-                      title: 'Payload Handler', payload: initialPayload!),
+              builder: (context) => MyHomePage(
+                  title: 'Navigation Handler', initialPayload: initialPayload),
             );
           default:
             print(settings.name);
             return MaterialPageRoute(
-              builder: (context) =>
-                  MyHomePage(title: 'Deep Link Converter',
-                      initialPayload: initialPayload),
+              builder: (context) => MyHomePage(
+                  title: 'Navigation Handler', initialPayload: initialPayload),
             );
         }
       },
@@ -72,6 +56,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
     );
   }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -87,20 +72,20 @@ class MyHomePage extends StatefulWidget {
   final String title;
   final PayloadObject? initialPayload;
 
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(StringProperty('title', title))
-    ..add(DiagnosticsProperty<PayloadObject?>('initialPayload', initialPayload));
+    properties
+      ..add(StringProperty('title', title))
+      ..add(DiagnosticsProperty<PayloadObject?>(
+          'initialPayload', initialPayload));
   }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   late PayloadObject? payload = widget.initialPayload;
 
   @override
@@ -108,16 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          backgroundColor: Theme
-              .of(context)
-              .colorScheme
-              .inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Center(
           child: Padding(
@@ -128,41 +108,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (payload != null)
                   Text(
                     'Extracted Payload:',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                 Text(
                   payload?.participantCode ?? 'Participant Code: N/A',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   payload?.endPoint ?? 'End Point: N/A',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   payload?.studyCode ?? 'Study Code: N/A',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
-
-
               ],
-
-
             ),
           ),
         ),
@@ -173,7 +137,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<PayloadObject?>('payload', payload));
   }
-
 }
 
 class PayloadPage extends StatelessWidget {
@@ -183,14 +146,10 @@ class PayloadPage extends StatelessWidget {
   final PayloadObject payload;
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(title),
-          backgroundColor: Theme
-              .of(context)
-              .colorScheme
-              .inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Center(
           child: Padding(
@@ -203,26 +162,17 @@ class PayloadPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   payload.participantCode ?? 'Participant Code: N/A',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   payload.endPoint ?? 'End Point: N/A',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   payload.studyCode ?? 'Study Code: N/A',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -235,7 +185,8 @@ class PayloadPage extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(StringProperty('title', title))..add(
-        DiagnosticsProperty<PayloadObject>('payload', payload));
+    properties
+      ..add(StringProperty('title', title))
+      ..add(DiagnosticsProperty<PayloadObject>('payload', payload));
   }
 }
