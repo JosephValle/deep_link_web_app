@@ -7,9 +7,7 @@ import 'payload_object.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Retrieve the current URL
   final currentUrl = html.window.location.href;
-  print('The current URL is: $currentUrl');
 
   final hashIndex = currentUrl.indexOf('#/');
   final fragment = hashIndex != -1 ? currentUrl.substring(hashIndex + 2) : '';
@@ -29,33 +27,31 @@ class MyApp extends StatelessWidget {
   final PayloadObject? initialPayload;
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: initialPayload != null ? '/payload' : '/',
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/':
-            print(settings.name);
-            return MaterialPageRoute(
-              builder: (context) => MyHomePage(
-                  title: 'Navigation Handler', initialPayload: initialPayload),
-            );
-          default:
-            print(settings.name);
-            return MaterialPageRoute(
-              builder: (context) => MyHomePage(
-                  title: 'Navigation Handler', initialPayload: initialPayload),
-            );
-        }
-      },
-      title: 'Deep Link Converter',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        initialRoute: initialPayload != null ? '/payload' : '/',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/':
+              return MaterialPageRoute(
+                builder: (context) => MyHomePage(
+                    title: 'Navigation Handler',
+                    initialPayload: initialPayload),
+              );
+            default:
+              return MaterialPageRoute(
+                builder: (context) => MyHomePage(
+                    title: 'Navigation Handler',
+                    initialPayload: initialPayload),
+              );
+          }
+        },
+        title: 'Deep Link Converter',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+      );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -136,57 +132,5 @@ class _MyHomePageState extends State<MyHomePage> {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<PayloadObject?>('payload', payload));
-  }
-}
-
-class PayloadPage extends StatelessWidget {
-  const PayloadPage({required this.title, required this.payload, super.key});
-
-  final String title;
-  final PayloadObject payload;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                const Text(
-                  'Payload Received:',
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  payload.participantCode ?? 'Participant Code: N/A',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  payload.endPoint ?? 'End Point: N/A',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  payload.studyCode ?? 'Study Code: N/A',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        ),
-      );
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(StringProperty('title', title))
-      ..add(DiagnosticsProperty<PayloadObject>('payload', payload));
   }
 }
