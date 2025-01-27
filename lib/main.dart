@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:universal_html/html.dart' as html;
 
+import 'home_page.dart';
 import 'payload_object.dart';
 
 void main() {
@@ -33,13 +34,13 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/':
               return MaterialPageRoute(
-                builder: (context) => MyHomePage(
+                builder: (context) => HomePage(
                     title: 'Navigation Handler',
                     initialPayload: initialPayload),
               );
             default:
               return MaterialPageRoute(
-                builder: (context) => MyHomePage(
+                builder: (context) => HomePage(
                     title: 'Navigation Handler',
                     initialPayload: initialPayload),
               );
@@ -58,79 +59,5 @@ class MyApp extends StatelessWidget {
     super.debugFillProperties(properties);
     properties.add(
         DiagnosticsProperty<PayloadObject?>('initialPayload', initialPayload));
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage(
-      {required this.title, required this.initialPayload, super.key});
-
-  final String title;
-  final PayloadObject? initialPayload;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(StringProperty('title', title))
-      ..add(DiagnosticsProperty<PayloadObject?>(
-          'initialPayload', initialPayload));
-  }
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  late PayloadObject? payload = widget.initialPayload;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (payload != null)
-                  Text(
-                    'Extracted Payload:',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                Text(
-                  payload?.participantCode ?? 'Participant Code: N/A',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  payload?.endPoint ?? 'End Point: N/A',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  payload?.studyCode ?? 'Study Code: N/A',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<PayloadObject?>('payload', payload));
   }
 }
