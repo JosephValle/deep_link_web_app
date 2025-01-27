@@ -17,6 +17,9 @@ void main() {
   // Parse the URL to check for 'payload' parameter
   final uri = Uri.parse(currentUrl.replaceAll('#/', ''));
 
+  print('The uri is: $uri');
+  print("The query parameters are: ${uri.queryParameters}");
+
   final payloadObject = uri.queryParameters.isEmpty
       ? null
       : PayloadObject.fromMap(uri.queryParameters);
@@ -29,42 +32,45 @@ class MyApp extends StatelessWidget {
   final PayloadObject? initialPayload;
 
   @override
-  Widget build(BuildContext context) =>
-      MaterialApp(
-        // Define the initial route based on the presence of payload
-        initialRoute: initialPayload != null ? '/payload' : '/',
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case '/':
-              print(settings.name);
-              return MaterialPageRoute(
-                builder: (context) =>
-                 MyHomePage(title: 'Deep Link Converter',
-                    initialPayload: initialPayload),
-              );
-            case '/payload':
-              print(settings.name);
-              return MaterialPageRoute(
-                builder: (context) =>
-                    PayloadPage(
-                        title: 'Payload Handler', payload: initialPayload!),
-              );
-            default:
-              print(settings.name);
-              return MaterialPageRoute(
-                builder: (context) =>
-                 MyHomePage(title: 'Deep Link Converter', initialPayload: initialPayload),
-              );
-          }
-        },
-        title: 'Deep Link Converter',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-          useMaterial3: true,
-        ),
-        debugShowCheckedModeBanner: false,
-      );
-
+  Widget build(BuildContext context) {
+    print('initialPayload: $initialPayload');
+    return
+    MaterialApp(
+      // Define the initial route based on the presence of payload
+      initialRoute: initialPayload != null ? '/payload' : '/',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/':
+            print(settings.name);
+            return MaterialPageRoute(
+              builder: (context) =>
+                  MyHomePage(title: 'Deep Link Converter',
+                      initialPayload: initialPayload),
+            );
+          case '/payload':
+            print(settings.name);
+            return MaterialPageRoute(
+              builder: (context) =>
+                  PayloadPage(
+                      title: 'Payload Handler', payload: initialPayload!),
+            );
+          default:
+            print(settings.name);
+            return MaterialPageRoute(
+              builder: (context) =>
+                  MyHomePage(title: 'Deep Link Converter',
+                      initialPayload: initialPayload),
+            );
+        }
+      },
+      title: 'Deep Link Converter',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        useMaterial3: true,
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -87,8 +93,8 @@ class MyHomePage extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty('title', title));
-    properties.add(DiagnosticsProperty<PayloadObject?>('initialPayload', initialPayload));
+    properties..add(StringProperty('title', title))
+    ..add(DiagnosticsProperty<PayloadObject?>('initialPayload', initialPayload));
   }
 }
 
