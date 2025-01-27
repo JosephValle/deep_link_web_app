@@ -11,6 +11,10 @@ void main() {
   final currentUrl = html.window.location.href;
   print('The current url is: $currentUrl');
 
+  // give me a test url that would work here:
+
+  
+
   // Parse the URL to check for 'payload' parameter
   final uri = Uri.parse(currentUrl.replaceAll('#/', ''));
 
