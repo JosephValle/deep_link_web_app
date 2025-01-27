@@ -14,17 +14,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    onGenerateRoute:  (settings) {
-      if (settings.name == '/payload') {
-        final payload = settings.arguments as String?;
-        print("Payload: $payload");
-        return MaterialPageRoute(
-          builder: (context) => MyHomePage(title: 'Deep Link Converter'),
-        );
-      }
-      return null;
-
-    },
+        onGenerateRoute: (settings) {
+          if (settings.name == '/payload') {
+            final payload = settings.arguments as String?;
+            print('Payload: $payload');
+            return MaterialPageRoute(
+              builder: (context) =>
+                  const MyHomePage(title: 'Deep Link Converter'),
+            );
+          }
+          return null;
+        },
         title: 'Deep Link Converter',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
