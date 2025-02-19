@@ -35,14 +35,16 @@ class MyApp extends StatelessWidget {
             case '/':
               return MaterialPageRoute(
                 builder: (context) => HomePage(
-                    title: 'Navigation Handler',
-                    initialPayload: initialPayload),
+                  title: 'Navigation Handler',
+                  initialPayload: initialPayload,
+                ),
               );
             default:
               return MaterialPageRoute(
                 builder: (context) => HomePage(
-                    title: 'Navigation Handler',
-                    initialPayload: initialPayload),
+                  title: 'Navigation Handler',
+                  initialPayload: initialPayload,
+                ),
               );
           }
         },
@@ -58,6 +60,7 @@ class MyApp extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-        DiagnosticsProperty<PayloadObject?>('initialPayload', initialPayload));
+      DiagnosticsProperty<PayloadObject?>('initialPayload', initialPayload),
+    );
   }
 }

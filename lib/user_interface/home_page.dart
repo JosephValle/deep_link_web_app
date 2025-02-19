@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:universal_html/html.dart' as html;
 import '../objects/payload_object.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage(
-      {required this.title, required this.initialPayload, super.key});
+  const HomePage({
+    required this.title,
+    required this.initialPayload,
+    super.key,
+  });
 
   final String title;
   final PayloadObject? initialPayload;
@@ -18,17 +21,28 @@ class HomePage extends StatefulWidget {
     super.debugFillProperties(properties);
     properties
       ..add(StringProperty('title', title))
-      ..add(DiagnosticsProperty<PayloadObject?>(
-          'initialPayload', initialPayload));
+      ..add(
+        DiagnosticsProperty<PayloadObject?>(
+          'initialPayload',
+          initialPayload,
+        ),
+      );
   }
 }
 
 class _MyHomePageState extends State<HomePage> {
   late PayloadObject? payload = widget.initialPayload;
 
+
   @override
   void initState() {
     super.initState();
+  }
+
+  void launchUrl() {
+    const url =
+        'mycapdeeplink://deeplink?participantCode=12345&studyCode=12345&endPoint=12345';
+    html.window.open(url, 'MyCap');
   }
 
   @override
@@ -43,6 +57,11 @@ class _MyHomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ElevatedButton(
+                  onPressed: launchUrl,
+                  child: const Text('Launch MyCap with below payload'),
+                ),
+                const SizedBox(height: 16),
                 if (payload != null)
                   Text(
                     'Extracted Payload:',
