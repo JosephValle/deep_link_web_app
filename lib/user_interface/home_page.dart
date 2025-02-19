@@ -33,16 +33,21 @@ class HomePage extends StatefulWidget {
 class _MyHomePageState extends State<HomePage> {
   late PayloadObject? payload = widget.initialPayload;
 
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void launchUrl() {
     const url =
         'mycapdeeplink://deeplink?participantCode=12345&studyCode=12345&endPoint=12345';
     html.window.open(url, 'MyCap');
+  }
+
+  void copyPayloadToClipboard() {
+    final payloadString = payload?.toMap().toString();
+    html.window.navigator.clipboard?.writeText(payloadString ?? '');
+    // then open this in a new tab
+    //https://apps.apple.com/us/app/mycap/id6448734173
+    html.window.open(
+      'https://apps.apple.com/us/app/mycap/id6448734173',
+      'MyCap',
+    );
   }
 
   @override
@@ -60,6 +65,10 @@ class _MyHomePageState extends State<HomePage> {
                 ElevatedButton(
                   onPressed: launchUrl,
                   child: const Text('Launch MyCap with below payload'),
+                ),
+                ElevatedButton(
+                  onPressed: copyPayloadToClipboard,
+                  child: const Text('Copy Payload to Clipboard'),
                 ),
                 const SizedBox(height: 16),
                 if (payload != null)
