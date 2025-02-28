@@ -15,7 +15,7 @@ void main() {
       ? ''
       : currentUrl.substring(queryIndex + 1, currentUrl.length);
 
-  final uri = Uri.parse('https://example.com/$fragment');
+  final uri = Uri.parse(currentUrl);
 
   final payloadObject = uri.queryParameters.isEmpty
       ? null
