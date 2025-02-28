@@ -42,8 +42,8 @@ class _MyHomePageState extends State<HomePage> {
     super.initState();
     webOs = _detectPlatform();
     if (widget.initialPayload != null) {
-      const url =
-          'mycapdeeplink://deeplink?participantCode=12345&studyCode=12345&endPoint=12345';
+      final url =
+          'mycapdeeplink://deeplink?participantCode=${widget.initialPayload!.participantCode}&studyCode=${widget.initialPayload!.studyCode}&endPoint=${widget.initialPayload!.endPoint}';
       html.window.location.href = url;
     }
   }
@@ -63,8 +63,8 @@ class _MyHomePageState extends State<HomePage> {
   }
 
   void launchUrl() {
-    const url =
-        'mycapdeeplink://deeplink?participantCode=12345&studyCode=12345&endPoint=12345';
+    final url =
+        'mycapdeeplink://deeplink?participantCode=${payload!.participantCode}&studyCode=${payload!.studyCode}&endPoint=${payload!.endPoint}';
     html.window.open(url, 'MyCap');
   }
 
