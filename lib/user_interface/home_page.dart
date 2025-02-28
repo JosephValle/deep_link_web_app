@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:universal_html/html.dart' as html;
 import '../objects/payload_object.dart';
 
@@ -30,8 +31,36 @@ class HomePage extends StatefulWidget {
   }
 }
 
+enum WebOs { iOS, android, other }
+
 class _MyHomePageState extends State<HomePage> {
   late PayloadObject? payload = widget.initialPayload;
+  late WebOs webOs;
+
+  @override
+  void initState() {
+    super.initState();
+    webOs = _detectPlatform();
+    if (widget.initialPayload != null) {
+      const url =
+          'mycapdeeplink://deeplink?participantCode=12345&studyCode=12345&endPoint=12345';
+      html.window.location.href = url;
+    }
+  }
+
+  WebOs _detectPlatform() {
+    final userAgent = html.window.navigator.userAgent.toLowerCase();
+    if (userAgent.contains('iphone') ||
+        userAgent.contains('ipad') ||
+        userAgent.contains('mac') &&
+            (html.window.navigator.maxTouchPoints ?? 0) > 0) {
+      return WebOs.iOS;
+    } else if (userAgent.contains('android')) {
+      return WebOs.android;
+    } else {
+      return WebOs.other;
+    }
+  }
 
   void launchUrl() {
     const url =
@@ -39,13 +68,17 @@ class _MyHomePageState extends State<HomePage> {
     html.window.open(url, 'MyCap');
   }
 
-  void copyPayloadToClipboard() {
+  Future<void> copyPayloadToClipboard() async {
     final payloadString = payload?.toMap().toString();
-    html.window.navigator.clipboard?.writeText(payloadString ?? '');
-    // then open this in a new tab
-    //https://apps.apple.com/us/app/mycap/id6448734173
+    await Clipboard.setData(ClipboardData(text: payloadString ?? 'No Payload'))
+        .then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Copied to your clipboard !')));
+    });
     html.window.open(
-      'https://apps.apple.com/us/app/mycap/id6448734173',
+      webOs == WebOs.iOS
+          ? 'https://apps.apple.com/us/app/mycap/id6448734173'
+          : 'https://play.google.com/store/apps/details?id=org.vumc.mycapplusbeta&hl=en_US',
       'MyCap',
     );
   }
@@ -62,21 +95,31 @@ class _MyHomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text("Already Have MyCap Installed?"),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: launchUrl,
-                  child: const Text('Launch MyCap with below payload'),
-                ),
-                ElevatedButton(
-                  onPressed: copyPayloadToClipboard,
-                  child: const Text('Copy Payload to Clipboard'),
+                  child: const Text('Join Study!'),
                 ),
                 const SizedBox(height: 16),
-                if (payload != null)
-                  Text(
-                    'Extracted Payload:',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
+                Text("Get the App!"),
+                if (webOs == WebOs.iOS || kDebugMode)
+                  GestureDetector(
+                    onTap: copyPayloadToClipboard,
+                    child: Image.asset(
+                      'assets/apple.png',
+                      width: 200,
+                    ),
                   ),
+                if (webOs == WebOs.android)
+                  GestureDetector(
+                    onTap: copyPayloadToClipboard,
+                    child: Image.asset(
+                      'assets/google.png',
+                      width: 200,
+                    ),
+                  ),
+                const SizedBox(height: 32),
                 Text(
                   payload?.participantCode ?? 'Participant Code: N/A',
                   style: Theme.of(context).textTheme.bodyLarge,

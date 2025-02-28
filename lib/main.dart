@@ -10,10 +10,12 @@ void main() {
 
   final currentUrl = html.window.location.href;
 
-  final hashIndex = currentUrl.indexOf('#/');
-  final fragment = hashIndex != -1 ? currentUrl.substring(hashIndex + 2) : '';
+  final queryIndex = currentUrl.indexOf('?');
+  final fragment = queryIndex == -1
+      ? ''
+      : currentUrl.substring(queryIndex + 1, currentUrl.length);
 
-  final uri = Uri.parse('https://example.com/?$fragment');
+  final uri = Uri.parse('https://example.com/$fragment');
 
   final payloadObject = uri.queryParameters.isEmpty
       ? null
@@ -35,14 +37,14 @@ class MyApp extends StatelessWidget {
             case '/':
               return MaterialPageRoute(
                 builder: (context) => HomePage(
-                  title: 'Navigation Handler',
+                  title: 'MyCap Study Launcher',
                   initialPayload: initialPayload,
                 ),
               );
             default:
               return MaterialPageRoute(
                 builder: (context) => HomePage(
-                  title: 'Navigation Handler',
+                  title: 'MyCap Study Launcher',
                   initialPayload: initialPayload,
                 ),
               );
