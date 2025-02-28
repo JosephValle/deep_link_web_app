@@ -10,11 +10,6 @@ void main() {
 
   final currentUrl = html.window.location.href;
 
-  final queryIndex = currentUrl.indexOf('?');
-  final fragment = queryIndex == -1
-      ? ''
-      : currentUrl.substring(queryIndex + 1, currentUrl.length);
-
   final uri = Uri.parse(currentUrl);
 
   final payloadObject = uri.queryParameters.isEmpty
