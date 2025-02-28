@@ -73,7 +73,8 @@ class _MyHomePageState extends State<HomePage> {
     await Clipboard.setData(ClipboardData(text: payloadString ?? 'No Payload'))
         .then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Copied to your clipboard !')));
+        const SnackBar(content: Text('Copied to your clipboard !')),
+      );
     });
     html.window.open(
       webOs == WebOs.iOS
@@ -95,14 +96,14 @@ class _MyHomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Already Have MyCap Installed?"),
+                const Text('Already Have MyCap Installed?'),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: launchUrl,
                   child: const Text('Join Study!'),
                 ),
                 const SizedBox(height: 16),
-                Text("Get the App!"),
+                const Text('Get the App!'),
                 if (webOs == WebOs.iOS || kDebugMode)
                   GestureDetector(
                     onTap: copyPayloadToClipboard,
