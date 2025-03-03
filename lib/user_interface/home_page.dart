@@ -42,6 +42,8 @@ class _MyHomePageState extends State<HomePage> {
     super.initState();
     webOs = _detectPlatform();
     if (widget.initialPayload != null) {
+
+      // mycapdeeplink://deeplink?payload=eyJlbmRwb2ludCI6Imh0dHBzOlwvXC9yZWRjYXAudnVtYy5vcmdcL2FwaVwvP2NvbnRlbnQ9bXljYXAiLCJwcm9qZWN0IjoiUC1aWE5UQ1NUWlk2UDFONFA4TlM0UCJ9&participant=U-2931E8QMNSFAEVY3YRS3
       final url =
           'mycapdeeplink://deeplink?participantCode=${widget.initialPayload!.participantCode}&studyCode=${widget.initialPayload!.studyCode}&endPoint=${widget.initialPayload!.endPoint}';
       html.window.location.href = url;
