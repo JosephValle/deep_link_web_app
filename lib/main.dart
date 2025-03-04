@@ -32,20 +32,18 @@ class MyApp extends StatelessWidget {
             case '/':
               return MaterialPageRoute(
                 builder: (context) => HomePage(
-                  title: 'MyCap Study Launcher',
                   initialPayload: initialPayload,
                 ),
               );
             default:
               return MaterialPageRoute(
                 builder: (context) => HomePage(
-                  title: 'MyCap Study Launcher',
                   initialPayload: initialPayload,
                 ),
               );
           }
         },
-        title: 'Deep Link Converter',
+        title: 'MyCap Study Launcher',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
           useMaterial3: true,

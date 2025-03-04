@@ -15,10 +15,13 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
+  get: ^4.7.2
+  get_it: ^8.0.3
   universal_html: ^2.2.4
 
 dev_dependencies:
 
+  flutter_launcher_icons: ^0.14.3
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
@@ -34,3 +37,12 @@ flutter:
   assets:
     - assets/apple.png
     - assets/google.png
+    - assets/logo_white.png
+
+#// flutter icons only for web
+
+flutter_launcher_icons:
+  web:
+    generate: true
+    image_path: "assets/logo_white.png"
+
