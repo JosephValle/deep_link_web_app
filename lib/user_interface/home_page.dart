@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:universal_html/html.dart' as html;
 import '../objects/payload_object.dart';
@@ -23,6 +25,28 @@ enum WebOs { iOS, android, other }
 class _HomePageState extends State<HomePage> {
   late PayloadObject? payload = widget.initialPayload;
   late WebOs webOs;
+
+  // Define a map of language names to their Locales.
+  final Map<String, Locale> languageMap = {
+    'English': const Locale('en', 'US'),
+    'Bengali': const Locale('bn', 'BD'),
+    'Spanish': const Locale('es', 'ES'),
+    'French': const Locale('fr', 'FR'),
+    'German': const Locale('de', 'DE'),
+    'Haitian Creole': const Locale('ht', 'HT'),
+    'Hindi': const Locale('hi', 'IN'),
+    'Italian': const Locale('it', 'IT'),
+    'Japanese': const Locale('ja', 'JP'),
+    'Korean': const Locale('ko', 'KR'),
+    'Brazilian Portuguese': const Locale('pt', 'BR'),
+    'Punjabi': const Locale('pa', 'IN'),
+    'Simplified Chinese': const Locale('zh', 'CN'),
+    'Standard Arabic': const Locale('ar', 'AE'),
+    'Tagalog': const Locale('tl', 'PH'),
+    'Ukrainian': const Locale('uk', 'UA'),
+    'Urdu': const Locale('ur', 'PK'),
+    'Vietnamese': const Locale('vi', 'VN'),
+  };
 
   @override
   void initState() {
@@ -58,13 +82,13 @@ class _HomePageState extends State<HomePage> {
   Future<void> copyPayloadToClipboard() async {
     if (payload == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid Link!'.tr)),
+        SnackBar(content: Text('invalidLink'.tr)),
       );
     } else {
       final String payloadString = jsonEncode(payload?.toMap());
       await Clipboard.setData(ClipboardData(text: payloadString)).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Copied to your clipboard!'.tr)),
+          SnackBar(content: Text('copiedToClipboard'.tr)),
         );
       });
       html.window.open(
@@ -77,87 +101,142 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(
-            'MyCap Study Launcher'.tr,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          centerTitle: true,
-          elevation: 2,
+  Widget build(BuildContext context) {
+    // Calculate a base width using the current screen width.
+    const double baseWidth = 250;
+    // The aspect ratio remains constant at 180/52.
+    const double aspectRatioValue = 180 / 52;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'mycapStudyLauncher'.tr,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Already Have MyCap Installed?'.tr,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        centerTitle: true,
+        elevation: 2,
+        actions: [
+          // Popup menu for language selection with a globe icon.
+          PopupMenuButton<Locale>(
+            icon: const Icon(Icons.public),
+            onSelected: (Locale locale) {
+              Get.updateLocale(locale);
+            },
+            itemBuilder: (BuildContext context) {
+              return languageMap.entries.map((entry) {
+                return PopupMenuItem<Locale>(
+                  value: entry.value,
+                  child: Text(entry.key),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'alreadyHaveMyCapInstalled'.tr,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(height: 20),
-                InkWell(
-                  onTap: launchUrl,
+              ),
+              const Gap(20),
+              InkWell(
+                onTap: launchUrl,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: baseWidth,
+                  ),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
+                          color: Colors.black.withAlpha(25),
                           blurRadius: 8,
                           offset: const Offset(0, 4),
                         ),
                       ],
                     ),
-                    height: 52,
-                    width: 180,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/logo_white.png', width: 52),
-                        Text(
-                          'Join Study!'.tr,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                    child: AspectRatio(
+                      aspectRatio: aspectRatioValue,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/logo_white.png',
+                            width: 52,
                           ),
-                        ),
-                      ],
+                          const Gap(8),
+                          AutoSizeText(
+                            'joinStudy'.tr,
+                            minFontSize: 11,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                Text(
-                  'Get the App!'.tr,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+              ),
+              const Gap(24),
+              Text(
+                'getTheApp'.tr,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const Gap(16),
+              if (webOs == WebOs.iOS || kDebugMode)
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: baseWidth,
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: aspectRatioValue,
+                    child: GestureDetector(
+                      onTap: copyPayloadToClipboard,
+                      child: Image.asset(
+                        'assets/apple.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 16),
-                if (webOs == WebOs.iOS || kDebugMode)
-                  GestureDetector(
-                    onTap: copyPayloadToClipboard,
-                    child: Image.asset('assets/apple.png', width: 180),
+              if (webOs == WebOs.android)
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: baseWidth,
                   ),
-                if (webOs == WebOs.android)
-                  GestureDetector(
-                    onTap: copyPayloadToClipboard,
-                    child: Image.asset('assets/google.png', width: 180),
+                  child: AspectRatio(
+                    aspectRatio: aspectRatioValue,
+                    child: GestureDetector(
+                      onTap: copyPayloadToClipboard,
+                      child: Image.asset(
+                        'assets/google.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 }
