@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,7 +73,10 @@ class _MyHomePageState extends State<HomePage> {
   }
 
   Future<void> copyPayloadToClipboard() async {
-    final payloadString = payload?.toMap().toString();
+    final String? payloadString = jsonEncode(payload?.toMap());
+    // encode as json string
+
+
     await Clipboard.setData(ClipboardData(text: payloadString ?? 'No Payload'))
         .then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
