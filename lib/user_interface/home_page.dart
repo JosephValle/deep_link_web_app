@@ -90,13 +90,13 @@ class _HomePageState extends State<HomePage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('copiedToClipboard'.tr)),
         );
+        html.window.open(
+          webOs == WebOs.iOS
+              ? 'https://apps.apple.com/us/app/mycap/id6448734173'
+              : 'https://play.google.com/store/apps/details?id=org.vumc.mycapplusbeta',
+          'MyCap',
+        );
       });
-      html.window.open(
-        webOs == WebOs.iOS
-            ? 'https://apps.apple.com/us/app/mycap/id6448734173'
-            : 'https://play.google.com/store/apps/details?id=org.vumc.mycapplusbeta&hl=en_US',
-        'MyCap',
-      );
     }
   }
 
