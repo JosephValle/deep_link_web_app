@@ -103,132 +103,136 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'mycapStudyLauncher'.tr,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        centerTitle: true,
-        elevation: 2,
-        actions: [
-          PopupMenuButton<Locale>(
-            icon: const Icon(Icons.public),
-            onSelected: (Locale locale) {
-              Get.updateLocale(locale);
-            },
-            itemBuilder: (BuildContext context) {
-              return languageMap.entries.map((entry) {
-                return PopupMenuItem<Locale>(
-                  value: entry.value,
-                  child: Text(entry.key),
-                );
-              }).toList();
-            },
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            'mycapStudyLauncher'.tr,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-        ],
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'alreadyHaveMyCapInstalled'.tr,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Gap(20),
-              InkWell(
-                onTap: launchUrl,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: baseWidth,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          centerTitle: true,
+          elevation: 2,
+          actions: [
+            PopupMenuButton<Locale>(
+              icon: const Icon(Icons.public),
+              onSelected: (Locale locale) {
+                Get.updateLocale(locale);
+              },
+              itemBuilder: (BuildContext context) {
+                return languageMap.entries.map((entry) {
+                  return PopupMenuItem<Locale>(
+                    value: entry.value,
+                    child: Text(entry.key),
+                  );
+                }).toList();
+              },
+            ),
+          ],
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'alreadyHaveMyCapInstalled'.tr,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withAlpha(25),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                ),
+                const Gap(20),
+                InkWell(
+                  onTap: launchUrl,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: baseWidth,
                     ),
-                    child: AspectRatio(
-                      aspectRatio: aspectRatioValue,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/logo_white.png',
-                            width: 52,
-                          ),
-                          const Gap(8),
-                          AutoSizeText(
-                            'joinStudy'.tr,
-                            minFontSize: 11,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(25),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              const Gap(24),
-              Text(
-                'getTheApp'.tr,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Gap(16),
-              if (webOs == WebOs.iOS || kDebugMode)
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: baseWidth,
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: aspectRatioValue,
-                    child: GestureDetector(
-                      onTap: copyPayloadToClipboard,
-                      child: Image.asset(
-                        'assets/apple.png',
-                        fit: BoxFit.contain,
+                      child: AspectRatio(
+                        aspectRatio: aspectRatioValue,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/logo_white.png',
+                              width: 52,
+                            ),
+                            const Gap(8),
+                            AutoSizeText(
+                              'joinStudy'.tr,
+                              minFontSize: 11,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              if (webOs == WebOs.android)
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: baseWidth,
+                const Gap(24),
+                Text(
+                  'getTheApp'.tr,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                   ),
-                  child: AspectRatio(
-                    aspectRatio: aspectRatioValue,
-                    child: GestureDetector(
-                      onTap: copyPayloadToClipboard,
-                      child: Image.asset(
-                        'assets/google.png',
-                        fit: BoxFit.contain,
+                ),
+                const Gap(16),
+                if (webOs == WebOs.iOS || kDebugMode)
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: baseWidth,
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: aspectRatioValue,
+                      child: GestureDetector(
+                        onTap: copyPayloadToClipboard,
+                        child: Image.asset(
+                          'assets/apple.png',
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),
-                ),
-            ],
+                if (webOs == WebOs.android)
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: baseWidth,
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: aspectRatioValue,
+                      child: GestureDetector(
+                        onTap: copyPayloadToClipboard,
+                        child: Image.asset(
+                          'assets/google.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
