@@ -23,10 +23,11 @@ class HomePage extends StatefulWidget {
 enum WebOs { iOS, android, other }
 
 class _HomePageState extends State<HomePage> {
+  final double baseWidth = 250;
+  final double aspectRatioValue = 180 / 52;
   late PayloadObject? payload = widget.initialPayload;
   late WebOs webOs;
 
-  // Define a map of language names to their Locales.
   final Map<String, Locale> languageMap = {
     'English': const Locale('en', 'US'),
     'Bengali': const Locale('bn', 'BD'),
@@ -102,11 +103,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Calculate a base width using the current screen width.
-    const double baseWidth = 250;
-    // The aspect ratio remains constant at 180/52.
-    const double aspectRatioValue = 180 / 52;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -117,7 +113,6 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 2,
         actions: [
-          // Popup menu for language selection with a globe icon.
           PopupMenuButton<Locale>(
             icon: const Icon(Icons.public),
             onSelected: (Locale locale) {
@@ -152,7 +147,7 @@ class _HomePageState extends State<HomePage> {
               InkWell(
                 onTap: launchUrl,
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(
+                  constraints: BoxConstraints(
                     maxWidth: baseWidth,
                   ),
                   child: Container(
@@ -203,7 +198,7 @@ class _HomePageState extends State<HomePage> {
               const Gap(16),
               if (webOs == WebOs.iOS || kDebugMode)
                 ConstrainedBox(
-                  constraints: const BoxConstraints(
+                  constraints: BoxConstraints(
                     maxWidth: baseWidth,
                   ),
                   child: AspectRatio(
@@ -219,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               if (webOs == WebOs.android)
                 ConstrainedBox(
-                  constraints: const BoxConstraints(
+                  constraints: BoxConstraints(
                     maxWidth: baseWidth,
                   ),
                   child: AspectRatio(
