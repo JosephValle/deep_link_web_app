@@ -79,8 +79,8 @@ class _HomePageState extends State<HomePage> {
   String _createDynamicLinkUrl(PayloadObject payload) {
     // Prepare the inner payload with only endpoint and project (study code).
     final Map<String, String> innerPayload = {
-      'endpoint': payload.endPoint ?? '',
-      'project': payload.studyCode ?? '',
+      'endpoint': payload.endPoint,
+      'project': payload.studyCode,
     };
     // Convert to JSON and encode in base64.
     final String jsonPayload = jsonEncode(innerPayload);

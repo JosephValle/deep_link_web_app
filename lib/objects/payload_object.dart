@@ -41,8 +41,8 @@ class PayloadObject {
   final String endPoint;
 
   Map<String, dynamic> toMap() => {
-    'participantCode': participantCode,
-    'studyCode': studyCode,
-    'endPoint': endPoint,
-  };
+        'participantCode': participantCode,
+        'studyCode': studyCode,
+        'endPoint': endPoint,
+      };
 }
