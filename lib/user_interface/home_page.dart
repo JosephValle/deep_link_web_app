@@ -54,8 +54,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     webOs = _detectPlatform();
     if (widget.initialPayload != null) {
-      final url =
-          'mycapdeeplink://deeplink?participantCode=${widget.initialPayload!.participantCode}&studyCode=${widget.initialPayload!.studyCode}&endPoint=${widget.initialPayload!.endPoint}';
+      // Immediately redirect using the new dynamic link format.
+      final url = _createDynamicLinkUrl(widget.initialPayload!);
       html.window.location.href = url;
     }
   }
@@ -74,9 +74,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  /// Creates a dynamic link URL in the format:
+  /// where the JSON payload contains only 'endpoint' and 'project' keys.
+  String _createDynamicLinkUrl(PayloadObject payload) {
+    // Prepare the inner payload with only endpoint and project (study code).
+    final Map<String, String> innerPayload = {
+      'endpoint': payload.endPoint ?? '',
+      'project': payload.studyCode ?? '',
+    };
+    // Convert to JSON and encode in base64.
+    final String jsonPayload = jsonEncode(innerPayload);
+    final String encodedPayload = base64.encode(utf8.encode(jsonPayload));
+
+    return 'mycapdeeplink://deeplink?participantCode=${payload.participantCode}&payload=$encodedPayload';
+  }
+
   void launchUrl() {
-    final url =
-        'mycapdeeplink://deeplink?participantCode=${payload!.participantCode}&studyCode=${payload!.studyCode}&endPoint=${payload!.endPoint}';
+    if (payload == null) return;
+    final url = _createDynamicLinkUrl(payload!);
     html.window.open(url, 'MyCap');
   }
 
@@ -86,8 +101,8 @@ class _HomePageState extends State<HomePage> {
         SnackBar(content: Text('invalidLink'.tr)),
       );
     } else {
-      final String payloadString = jsonEncode(payload?.toMap());
-      await Clipboard.setData(ClipboardData(text: payloadString)).then((_) {
+      final url = _createDynamicLinkUrl(payload!);
+      await Clipboard.setData(ClipboardData(text: url)).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('copiedToClipboard'.tr)),
         );
