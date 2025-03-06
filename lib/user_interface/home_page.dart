@@ -101,8 +101,8 @@ class _HomePageState extends State<HomePage> {
         SnackBar(content: Text('invalidLink'.tr)),
       );
     } else {
-      final url = _createDynamicLinkUrl(payload!);
-      await Clipboard.setData(ClipboardData(text: url)).then((_) {
+      await Clipboard.setData(ClipboardData(text: jsonEncode(payload?.toMap())))
+          .then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('copiedToClipboard'.tr)),
         );
