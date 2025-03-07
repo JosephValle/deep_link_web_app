@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:deep_link_web_app/objects/dynamic_link_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -101,7 +102,12 @@ class _HomePageState extends State<HomePage> {
         SnackBar(content: Text('invalidLink'.tr)),
       );
     } else {
-      await Clipboard.setData(ClipboardData(text: jsonEncode(payload?.toMap())))
+      final DynamicLinkModel model = DynamicLinkModel(
+        endPoint: payload!.endPoint,
+        participantCode: payload!.participantCode,
+        studyCode: payload!.studyCode,
+      );
+      await Clipboard.setData(ClipboardData(text: jsonEncode(model.toMap())))
           .then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('copiedToClipboard'.tr)),
