@@ -32,9 +32,15 @@ jobs:
         run: |
           echo '{ "applinks": { "apps": [], "details": [ { "appID": "Q5H6LPUXU5.org.vumc.mycapplusbeta", "paths": ["*"] } ] } }' > build/web/.well-known/apple-app-site-association
 
+      - name: Create Android Asset Links file
+        run: |
+          echo '[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "android_app", "package_name": "org.vumc.mycapplusbeta", "sha256_cert_fingerprints": ["ED:A3:A3:0D:47:D6:61:6A:0E:A8:CD:3E:F7:A1:FC:F4:6E:86:96:6B:5E:D4:C3:C4:78:F3:1C:F8:26:C2:8D:78"] } }]' > build/web/.well-known/assetlinks.json
+
       - name: Create _headers file
         run: |
           echo '/.well-known/apple-app-site-association' > build/web/_headers
+          echo '  Content-Type: application/json' >> build/web/_headers
+          echo '/.well-known/assetlinks.json' >> build/web/_headers
           echo '  Content-Type: application/json' >> build/web/_headers
 
       - name: Deploy
