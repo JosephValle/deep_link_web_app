@@ -212,14 +212,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const Gap(24),
-                Text(
-                  'getTheApp'.tr,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                if (webOs == WebOs.iOS || kDebugMode || webOs == WebOs.android)
+                  Text(
+                    'getTheApp'.tr,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const Gap(16),
+                if (webOs == WebOs.iOS || kDebugMode || webOs == WebOs.android)
+                  const Gap(16),
                 if (webOs == WebOs.iOS || kDebugMode)
                   ConstrainedBox(
                     constraints: BoxConstraints(
