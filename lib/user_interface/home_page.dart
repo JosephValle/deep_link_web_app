@@ -54,11 +54,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     webOs = _detectPlatform();
-    // if (widget.initialPayload != null) {
-    //   // Immediately redirect using the new dynamic link format.
-    //   final url = _createDynamicLinkUrl(widget.initialPayload!);
-    //   html.window.location.href = url;
-    // }
   }
 
   WebOs _detectPlatform() {
