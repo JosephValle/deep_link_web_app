@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
   void launchUrl() {
     if (payload == null) return;
     final url = _createDynamicLinkUrl(payload!);
-    html.window.open(url, 'MyCap');
+    html.window.location.href = url;
   }
 
   Future<void> copyPayloadToClipboard() async {
