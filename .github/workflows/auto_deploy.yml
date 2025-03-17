@@ -43,6 +43,9 @@ jobs:
           echo '/.well-known/assetlinks.json' >> build/web/_headers
           echo '  Content-Type: application/json' >> build/web/_headers
 
+      - name: Create CNAME File
+        run: echo "app.projectmycap.org" > ./build/web/CNAME
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
