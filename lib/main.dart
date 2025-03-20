@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      title: 'mycapStudyLauncher'.tr,
+      title: 'MyCap Welcome',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
