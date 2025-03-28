@@ -11,6 +11,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Get the App!',
           'copiedToClipboard': 'Copied to your clipboard!',
           'invalidLink': 'Invalid Link!',
+          'installApp':
+              'If you are not prompted or automatically redirected, please click the button below to install the app.',
         },
         // Bengali
         'bn_BD': {
@@ -20,6 +22,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'অ্যাপটি পান!',
           'copiedToClipboard': 'আপনার ক্লিপবোর্ডে কপি করা হয়েছে!',
           'invalidLink': 'অবৈধ লিঙ্ক!',
+          'installApp':
+              'যদি আপনাকে প্রম্পট করা না হয় বা স্বয়ংক্রিয়ভাবে পুনঃনির্দেশিত না করা হয়, তাহলে অ্যাপটি ইনস্টল করতে নিচের বোতামে ক্লিক করুন।',
         },
         // Spanish
         'es_ES': {
@@ -29,6 +33,8 @@ class MyTranslations extends Translations {
           'getTheApp': '¡Obtén la aplicación!',
           'copiedToClipboard': '¡Copiado al portapapeles!',
           'invalidLink': '¡Enlace no válido!',
+          'installApp':
+              'Si no se le solicita o no se redirige automáticamente, haga clic en el botón de abajo para instalar la aplicación.',
         },
         // French
         'fr_FR': {
@@ -38,6 +44,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Obtenez l\'application!',
           'copiedToClipboard': 'Copié dans le presse-papiers!',
           'invalidLink': 'Lien invalide!',
+          'installApp':
+              'Si vous n\'êtes pas invité ou redirigé automatiquement, veuillez cliquer sur le bouton ci-dessous pour installer l\'application.',
         },
         // German
         'de_DE': {
@@ -47,6 +55,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Hol dir die App!',
           'copiedToClipboard': 'In die Zwischenablage kopiert!',
           'invalidLink': 'Ungültiger Link!',
+          'installApp':
+              'Falls Sie nicht aufgefordert werden oder nicht automatisch weitergeleitet werden, klicken Sie bitte auf den unten stehenden Button, um die App zu installieren.',
         },
         // Haitian Creole
         'ht_HT': {
@@ -56,6 +66,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Jwenn aplikasyon an!',
           'copiedToClipboard': 'Kopi nan clipboard ou!',
           'invalidLink': 'Lyenn pa valab!',
+          'installApp':
+              'Si ou pa resevwa okenn demann oswa redireksyon otomatikman, tanpri klike sou bouton an anba a pou enstale aplikasyon an.',
         },
         // Hindi
         'hi_IN': {
@@ -65,6 +77,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'ऐप प्राप्त करें!',
           'copiedToClipboard': 'क्लिपबोर्ड पर कॉपी किया गया!',
           'invalidLink': 'अमान्य लिंक!',
+          'installApp':
+              'यदि आपको संकेत नहीं मिलता है या स्वचालित रूप से पुनर्निर्देशित नहीं किया जाता है, तो कृपया ऐप इंस्टॉल करने के लिए नीचे दिए गए बटन पर क्लिक करें।',
         },
         // Italian
         'it_IT': {
@@ -74,6 +88,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Scarica l\'app!',
           'copiedToClipboard': 'Copiato negli appunti!',
           'invalidLink': 'Link non valido!',
+          'installApp':
+              'Se non ti viene richiesto o non vieni reindirizzato automaticamente, fai clic sul pulsante qui sotto per installare l\'app.',
         },
         // Japanese
         'ja_JP': {
@@ -83,6 +99,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'アプリを入手！',
           'copiedToClipboard': 'クリップボードにコピーしました！',
           'invalidLink': '無効なリンク！',
+          'installApp':
+              '自動的にリダイレクトされない場合やプロンプトが表示されない場合は、下のボタンをクリックしてアプリをインストールしてください。',
         },
         // Korean
         'ko_KR': {
@@ -92,6 +110,7 @@ class MyTranslations extends Translations {
           'getTheApp': '앱 받기!',
           'copiedToClipboard': '클립보드에 복사됨!',
           'invalidLink': '잘못된 링크!',
+          'installApp': '자동으로 리디렉션되거나 프롬프트가 표시되지 않는 경우, 아래 버튼을 클릭하여 앱을 설치하세요.',
         },
         // Brazilian Portuguese
         'pt_BR': {
@@ -101,6 +120,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Obtenha o aplicativo!',
           'copiedToClipboard': 'Copiado para sua área de transferência!',
           'invalidLink': 'Link inválido!',
+          'installApp':
+              'Se você não for solicitado ou redirecionado automaticamente, clique no botão abaixo para instalar o aplicativo.',
         },
         // Punjabi
         'pa_IN': {
@@ -110,6 +131,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'ਐਪ ਪ੍ਰਾਪਤ ਕਰੋ!',
           'copiedToClipboard': 'ਤੁਹਾਡੇ ਕਲਿੱਪਬੋਰਡ \'ਤੇ ਨਕਲ ਕੀਤਾ ਗਿਆ!',
           'invalidLink': 'ਅਮਾਨਯ ਲਿੰਕ!',
+          'installApp':
+              'ਜੇ ਤੁਹਾਨੂੰ ਸੂਚਿਤ ਨਹੀਂ ਕੀਤਾ ਜਾਂਦਾ ਜਾਂ ਸਵੈਚਾਲਿਤ ਤੌਰ \'ਤੇ ਰੀਡਾਇਰੈਕਟ ਨਹੀਂ ਕੀਤਾ ਜਾਂਦਾ, ਤਾਂ ਕਿਰਪਾ ਕਰਕੇ ਐਪ ਇੰਸਟਾਲ ਕਰਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਬਟਨ \'ਤੇ ਕਲਿੱਕ ਕਰੋ।',
         },
         // Simplified Chinese
         'zh_CN': {
@@ -119,6 +142,7 @@ class MyTranslations extends Translations {
           'getTheApp': '获取应用程序！',
           'copiedToClipboard': '已复制到剪贴板！',
           'invalidLink': '无效链接！',
+          'installApp': '如果没有提示或自动重定向，请点击下方按钮以安装应用程序。',
         },
         // Standard Arabic
         'ar_AE': {
@@ -128,6 +152,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'احصل على التطبيق!',
           'copiedToClipboard': 'تم النسخ إلى الحافظة!',
           'invalidLink': 'رابط غير صالح!',
+          'installApp':
+              'إذا لم تتم مطالبتك أو إعادة توجيهك تلقائيًا، يرجى النقر على الزر أدناه لتثبيت التطبيق.',
         },
         // Tagalog
         'tl_PH': {
@@ -137,6 +163,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Kunin ang app!',
           'copiedToClipboard': 'Nakopya sa clipboard!',
           'invalidLink': 'Hindi wastong link!',
+          'installApp':
+              'Kung hindi ka napiprompt o awtomatikong na-redirect, mangyaring i-click ang button sa ibaba upang i-install ang app.',
         },
         // Ukrainian
         'uk_UA': {
@@ -146,6 +174,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Отримайте додаток!',
           'copiedToClipboard': 'Скопійовано в буфер обміну!',
           'invalidLink': 'Невірне посилання!',
+          'installApp':
+              'Якщо вам не буде запропоновано або ви не будете автоматично перенаправлені, будь ласка, натисніть кнопку нижче, щоб встановити додаток.',
         },
         // Urdu
         'ur_PK': {
@@ -155,6 +185,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'ایپ حاصل کریں!',
           'copiedToClipboard': 'آپ کے کلپ بورڈ پر کاپی ہوا!',
           'invalidLink': 'غلط لنک!',
+          'installApp':
+              'اگر آپ کو خود بخود رہنمائی نہیں کی جاتی یا ری ڈائریکٹ نہیں کیا جاتا تو براہ کرم ایپ انسٹال کرنے کے لیے نیچے دیے گئے بٹن پر کلک کریں۔',
         },
         // Vietnamese
         'vi_VN': {
@@ -164,6 +196,8 @@ class MyTranslations extends Translations {
           'getTheApp': 'Tải ứng dụng!',
           'copiedToClipboard': 'Đã sao chép vào khay nhớ tạm!',
           'invalidLink': 'Liên kết không hợp lệ!',
+          'installApp':
+              'Nếu bạn không được nhắc hoặc tự động chuyển hướng, hãy nhấp vào nút bên dưới để cài đặt ứng dụng.',
         },
       };
 }

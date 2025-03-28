@@ -88,6 +88,15 @@ class _HomePageState extends State<HomePage> {
   void launchUrl() {
     if (payload == null) return;
     final url = _createDynamicLinkUrl(payload!);
+    // show a snackbar of: installApp
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('installApp'.tr),
+        duration: const Duration(
+          seconds: 5,
+        ),
+      ),
+    );
     html.window.location.href = url;
   }
 

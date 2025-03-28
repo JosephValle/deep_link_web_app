@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 class DynamicLinkModel {
   final String endPoint;
   final String participantCode;
@@ -33,7 +35,9 @@ class DynamicLinkModel {
         studyCode = payloadMap['project'] ?? '';
       } catch (e) {
         // Handle errors if decoding fails
-        print('Error decoding payload: $e');
+        if (kDebugMode) {
+          print('Error decoding payload: $e');
+        }
       }
     }
 
