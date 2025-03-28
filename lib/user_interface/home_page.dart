@@ -90,16 +90,14 @@ class _HomePageState extends State<HomePage> {
     final url = _createDynamicLinkUrl(payload!);
     // show a snackbar of: installApp if android
 
-    if(webOs == WebOs.android) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('installApp'.tr),
-          duration: const Duration(
-            seconds: 5,
-          ),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('installApp'.tr),
+        duration: const Duration(
+          seconds: 5,
         ),
-      );
-    }
+      ),
+    );
     html.window.location.href = url;
   }
 
