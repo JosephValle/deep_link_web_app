@@ -92,7 +92,11 @@ class _HomePageState extends State<HomePage> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('installApp'.tr),
+        content: Text(
+          webOs == WebOs.android
+              ? 'installAppAndroid'.tr
+              : 'installAppApple'.tr,
+        ),
         duration: const Duration(
           seconds: 5,
         ),
