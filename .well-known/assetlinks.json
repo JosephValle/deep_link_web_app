@@ -1,0 +1,1 @@
+[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "android_app", "package_name": "org.vumc.mycapplusbeta", "sha256_cert_fingerprints": ["ED:A3:A3:0D:47:D6:61:6A:0E:A8:CD:3E:F7:A1:FC:F4:6E:86:96:6B:5E:D4:C3:C4:78:F3:1C:F8:26:C2:8D:78"] } }]
